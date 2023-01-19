@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: 'admin'
+    password: 'root'
+    url: 'jdbc:mysql://localhost:3306/sagrada'
+  sql:
+    init:
+      mode: always
