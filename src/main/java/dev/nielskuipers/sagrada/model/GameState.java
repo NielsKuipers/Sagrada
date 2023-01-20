@@ -1,5 +1,5 @@
 package dev.nielskuipers.sagrada.model;
 
 public enum GameState {
-    NEW, PLAYING, FINISHED
+    NEW, PLAYING, OPEN, FINISHED
 }

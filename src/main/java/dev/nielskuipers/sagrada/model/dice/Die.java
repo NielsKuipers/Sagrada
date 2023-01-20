@@ -4,9 +4,8 @@ public abstract class Die {
     private int value;
     private dieColor color;
 
-    public Die(int value, dieColor color) {
+    public Die(int value) {
         this.value = value;
-        this.color = color;
     }
 
     public int getValue() {
