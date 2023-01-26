@@ -1,7 +1,7 @@
 package dev.nielskuipers.sagrada.model;
 
-import dev.nielskuipers.sagrada.Converter.GameDiceConverter;
-import dev.nielskuipers.sagrada.Converter.GameStateConverter;
+import dev.nielskuipers.sagrada.converter.GameDiceConverter;
+import dev.nielskuipers.sagrada.converter.GameStateConverter;
 import dev.nielskuipers.sagrada.model.dice.Die;
 import jakarta.persistence.*;
 
@@ -21,7 +21,7 @@ public class Game {
     @Convert(converter = GameDiceConverter.class)
     private ArrayList<Die> die;
 
-    public long getId() {
+    public int getId() {
         return this.id;
     }
 

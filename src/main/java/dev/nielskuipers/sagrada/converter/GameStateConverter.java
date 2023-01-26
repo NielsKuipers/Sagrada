@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.Converter;
+package dev.nielskuipers.sagrada.converter;
 
 import dev.nielskuipers.sagrada.model.GameState;
 import jakarta.persistence.AttributeConverter;

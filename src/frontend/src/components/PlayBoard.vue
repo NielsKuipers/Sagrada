@@ -14,7 +14,9 @@ export default {
   },
   mounted() {
     fetch("/api/game/1")
-        .then((res) => res.text())
+        .then((res) => {
+          return res.text();
+        })
         .then((data) => {
           this.hehe = data;
           console.log(data);

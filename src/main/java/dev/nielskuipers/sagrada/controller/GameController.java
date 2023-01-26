@@ -1,13 +1,19 @@
 package dev.nielskuipers.sagrada.controller;
 
-import dev.nielskuipers.sagrada.Exception.GameNotFoundException;
+import dev.nielskuipers.sagrada.assembler.GameModelAssembler;
+import dev.nielskuipers.sagrada.exception.GameNotFoundException;
 import dev.nielskuipers.sagrada.model.Game;
 import dev.nielskuipers.sagrada.repository.GameRepository;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -16,9 +22,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api/game")
 public class GameController {
     private final GameRepository repository;
+    private final GameModelAssembler assembler;
 
-    GameController(GameRepository repository) {
+    GameController(GameRepository repository, GameModelAssembler assembler) {
         this.repository = repository;
+        this.assembler = assembler;
     }
 
     @GetMapping("/{id}")
@@ -26,13 +34,14 @@ public class GameController {
         Game game = repository.findById(id)
                 .orElseThrow(() -> new GameNotFoundException(id));
 
-        return EntityModel.of(game,
-                linkTo(methodOn(GameController.class).getGame(id)).withSelfRel(),
-                linkTo(methodOn(GameController.class).all()).withRel("games"));
+        return assembler.toModel(game);
     }
 
     @GetMapping("/")
-    Iterable<Game> all() {
-        return repository.findAll();
+    public CollectionModel<EntityModel<Game>> all() {
+        List<EntityModel<Game>> games = new ArrayList<>();
+        repository.findAll().forEach(game -> games.add(assembler.toModel(game)));
+
+        return CollectionModel.of(games, linkTo(methodOn(GameController.class).all()).withSelfRel());
     }
 }

@@ -1,11 +1,9 @@
-package dev.nielskuipers.sagrada.Converter;
+package dev.nielskuipers.sagrada.converter;
 
 import dev.nielskuipers.sagrada.model.dice.*;
 import jakarta.persistence.AttributeConverter;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GameDiceConverter implements AttributeConverter<ArrayList<Die>, String> {
     @Override
