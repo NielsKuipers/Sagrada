@@ -10,6 +10,7 @@ SET foreign_key_checks = 1;
 create table IF NOT EXISTS game
 (
     id    int auto_increment primary key,
+    die   varchar(50),
     state varchar(10)
 );
 

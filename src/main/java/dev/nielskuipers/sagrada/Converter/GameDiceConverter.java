@@ -25,19 +25,18 @@ public class GameDiceConverter implements AttributeConverter<ArrayList<Die>, Str
 
     @Override
     public ArrayList<Die> convertToEntityAttribute(String s) {
-        String[] dice = s.split("[a-zA-Z][0-9]+");
+        String[] dice = s.split("(?<=\\G.{2})");
         ArrayList<Die> result = new ArrayList<>();
 
         for (String die : dice) {
             switch (die.charAt(0)) {
-                case 'B' -> result.add(new BlueDie(die.charAt(1)));
-                case 'G' -> result.add(new GreenDie(die.charAt(1)));
-                case 'P' -> result.add(new PurpleDie(die.charAt(1)));
-                case 'R' -> result.add(new RedDie(die.charAt(1)));
-                case 'Y' -> result.add(new YellowDie(die.charAt(1)));
+                case 'B' -> result.add(new BlueDie(die.charAt(1) - '0'));
+                case 'G' -> result.add(new GreenDie(die.charAt(1) - '0'));
+                case 'P' -> result.add(new PurpleDie(die.charAt(1) - '0'));
+                case 'R' -> result.add(new RedDie(die.charAt(1) - '0'));
+                case 'Y' -> result.add(new YellowDie(die.charAt(1) - '0'));
             }
         }
-
         return result;
     }
 }

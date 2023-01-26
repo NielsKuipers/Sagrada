@@ -1,5 +1,6 @@
 package dev.nielskuipers.sagrada.model;
 
+import dev.nielskuipers.sagrada.Converter.GameDiceConverter;
 import dev.nielskuipers.sagrada.Converter.GameStateConverter;
 import dev.nielskuipers.sagrada.model.dice.Die;
 import jakarta.persistence.*;
@@ -17,6 +18,8 @@ public class Game {
     private Collection<Player> players;
     @Convert(converter = GameStateConverter.class)
     private GameState state;
+    @Convert(converter = GameDiceConverter.class)
+    private ArrayList<Die> die;
 
     public long getId() {
         return this.id;
@@ -40,5 +43,13 @@ public class Game {
 
     public void setState(GameState state) {
         this.state = state;
+    }
+
+    public ArrayList<Die> getDie() {
+        return die;
+    }
+
+    public void setDie(ArrayList<Die> die) {
+        this.die = die;
     }
 }
