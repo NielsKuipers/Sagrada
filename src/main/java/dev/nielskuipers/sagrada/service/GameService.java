@@ -6,7 +6,7 @@ import dev.nielskuipers.sagrada.model.Player;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GameManager {
+public class GameService {
     public Game createGame(Player player) {
        Game game = new Game();
        game.addPlayer(player);

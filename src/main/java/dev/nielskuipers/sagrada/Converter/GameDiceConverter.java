@@ -1,0 +1,43 @@
+package dev.nielskuipers.sagrada.Converter;
+
+import dev.nielskuipers.sagrada.model.dice.*;
+import jakarta.persistence.AttributeConverter;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class GameDiceConverter implements AttributeConverter<ArrayList<Die>, String> {
+    @Override
+    public String convertToDatabaseColumn(ArrayList<Die> dice) {
+        StringBuilder diestring = new StringBuilder();
+
+        for (Die die : dice) {
+            String dieColor = die.getColor().toString();
+            int dieValue = die.getValue();
+
+            diestring.append(dieColor.charAt(0));
+            diestring.append(dieValue);
+        }
+
+        return diestring.toString();
+    }
+
+    @Override
+    public ArrayList<Die> convertToEntityAttribute(String s) {
+        String[] dice = s.split("[a-zA-Z][0-9]+");
+        ArrayList<Die> result = new ArrayList<>();
+
+        for (String die : dice) {
+            switch (die.charAt(0)) {
+                case 'B' -> result.add(new BlueDie(die.charAt(1)));
+                case 'G' -> result.add(new GreenDie(die.charAt(1)));
+                case 'P' -> result.add(new PurpleDie(die.charAt(1)));
+                case 'R' -> result.add(new RedDie(die.charAt(1)));
+                case 'Y' -> result.add(new YellowDie(die.charAt(1)));
+            }
+        }
+
+        return result;
+    }
+}

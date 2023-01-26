@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 public class ObjectiveCard {
     @Id
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private String type;

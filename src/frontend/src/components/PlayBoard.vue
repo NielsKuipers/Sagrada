@@ -1,16 +1,25 @@
 <template>
   <div class="board-wrapper">
-    <div v-for="index in 4" :key="index">
-      <a v-for="index in 5" :key="index">
-        b
-      </a>
-    </div>
+    <p>{{hehe}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PlayBoard"
+  name: "PlayBoard",
+  data() {
+    return {
+      hehe: ''
+    }
+  },
+  mounted() {
+    fetch("/api/game/1")
+        .then((res) => res.text())
+        .then((data) => {
+          this.hehe = data;
+          console.log(data);
+        })
+  },
 }
 </script>
 

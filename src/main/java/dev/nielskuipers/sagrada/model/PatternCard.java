@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 public class PatternCard {
     @Id
-    int id;
+    Long id;
     String pattern;
     int difficulty;
 
