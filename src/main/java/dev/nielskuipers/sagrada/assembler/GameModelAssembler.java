@@ -1,7 +1,7 @@
 package dev.nielskuipers.sagrada.assembler;
 
 import dev.nielskuipers.sagrada.controller.GameController;
-import dev.nielskuipers.sagrada.model.Game;
+import dev.nielskuipers.sagrada.model.game.Game;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

@@ -22,7 +22,7 @@ create table IF NOT EXISTS player
 );
 
 -- Game Players
-create table IF NOT EXISTS game_players
+create table IF NOT EXISTS game_player
 (
     game_id       int,
     player_id     int,

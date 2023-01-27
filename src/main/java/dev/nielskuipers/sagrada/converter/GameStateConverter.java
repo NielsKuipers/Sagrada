@@ -1,6 +1,6 @@
 package dev.nielskuipers.sagrada.converter;
 
-import dev.nielskuipers.sagrada.model.GameState;
+import dev.nielskuipers.sagrada.model.game.GameState;
 import jakarta.persistence.AttributeConverter;
 
 public class GameStateConverter implements AttributeConverter<GameState, String> {

@@ -19,7 +19,6 @@ export default {
         })
         .then((data) => {
           this.hehe = data;
-          console.log(data);
         })
   },
 }

@@ -2,18 +2,17 @@ package dev.nielskuipers.sagrada.controller;
 
 import dev.nielskuipers.sagrada.assembler.GameModelAssembler;
 import dev.nielskuipers.sagrada.exception.GameNotFoundException;
-import dev.nielskuipers.sagrada.model.Game;
+import dev.nielskuipers.sagrada.model.game.Game;
+import dev.nielskuipers.sagrada.model.game.GameState;
+import dev.nielskuipers.sagrada.model.game.Player;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -43,5 +42,15 @@ public class GameController {
         repository.findAll().forEach(game -> games.add(assembler.toModel(game)));
 
         return CollectionModel.of(games, linkTo(methodOn(GameController.class).all()).withSelfRel());
+    }
+
+    @PostMapping("/")
+    ResponseEntity<EntityModel<Game>> newGame(@RequestBody Game game) {
+        game.setState(GameState.NEW);
+        Game newGame = repository.save(game);
+
+        return ResponseEntity
+                .created(linkTo(methodOn(GameController.class).getGame(newGame.getId())).toUri())
+                .body(assembler.toModel(newGame));
     }
 }

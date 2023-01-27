@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.model;
+package dev.nielskuipers.sagrada.model.game;
 
 import org.springframework.data.annotation.Id;
 

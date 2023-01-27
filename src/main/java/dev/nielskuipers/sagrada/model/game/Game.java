@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.model;
+package dev.nielskuipers.sagrada.model.game;
 
 import dev.nielskuipers.sagrada.converter.GameDiceConverter;
 import dev.nielskuipers.sagrada.converter.GameStateConverter;
@@ -6,16 +6,15 @@ import dev.nielskuipers.sagrada.model.dice.Die;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Game {
     @Id
     private int id;
-    @ManyToMany
-    @JoinTable(name = "game_players", joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id", referencedColumnName = "id"))
-    private Collection<Player> players;
+
+    @OneToMany(mappedBy = "game")
+    private List<GamePlayer> gamePlayers;
     @Convert(converter = GameStateConverter.class)
     private GameState state;
     @Convert(converter = GameDiceConverter.class)
@@ -23,18 +22,6 @@ public class Game {
 
     public int getId() {
         return this.id;
-    }
-
-    public Collection<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Collection<Player> players) {
-        this.players = players;
-    }
-
-    public void addPlayer(Player player) {
-        this.players.add(player);
     }
 
     public GameState getState() {
@@ -51,5 +38,13 @@ public class Game {
 
     public void setDie(ArrayList<Die> die) {
         this.die = die;
+    }
+
+    public List<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setGamePlayers(List<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
     }
 }
