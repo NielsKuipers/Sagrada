@@ -3,33 +3,24 @@ package dev.nielskuipers.sagrada.model.game;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "game_player")
-@IdClass(GamePlayerId.class)
 public class GamePlayer {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "id")
+    @EmbeddedId
+    private GamePlayerId id = new GamePlayerId();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("gameId")
     private Game game;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "player_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("playerId")
     private Player player;
-
-    public GamePlayer() {
-        playerScore = 0;
-        boardPattern = "";
-    }
-
-    public GamePlayer(Game game, Player player) {
-        playerScore = 0;
-        boardPattern = "";
-        this.game = game;
-        this.player = player;
-    }
 
     private int playerScore;
     private String boardPattern;
+
+    public GamePlayerId getId() {
+        return id;
+    }
 
     public int getPlayerScore() {
         return playerScore;
@@ -47,11 +38,9 @@ public class GamePlayer {
         this.boardPattern = boardPattern;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
+    public GamePlayer(){}
+    public GamePlayer(Game game, Player player) {
+        this.game = game;
         this.player = player;
     }
 }

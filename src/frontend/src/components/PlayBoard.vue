@@ -1,6 +1,8 @@
 <template>
   <div class="board-wrapper">
-    <p>{{hehe}}</p>
+    <p>{{ hehe }}</p>
+    <button @click=epicPost()>click
+    </button>
   </div>
 </template>
 
@@ -21,6 +23,24 @@ export default {
           this.hehe = data;
         })
   },
+  computed: {
+    console: () => console
+  },
+  methods: {
+    epicPost() {
+      const postopt = {
+        method: 'POST',
+        headers: {},
+        body: this.hehe
+      };
+
+      fetch('/api/game/', postopt)
+          .then(res => res.text())
+          .then((data) => {
+            console.log(data);
+          })
+    }
+  }
 }
 </script>
 

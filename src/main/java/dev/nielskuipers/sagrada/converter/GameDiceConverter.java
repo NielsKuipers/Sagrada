@@ -1,13 +1,15 @@
 package dev.nielskuipers.sagrada.converter;
 
 import dev.nielskuipers.sagrada.model.dice.*;
+import dev.nielskuipers.sagrada.model.dice.types.*;
 import jakarta.persistence.AttributeConverter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GameDiceConverter implements AttributeConverter<ArrayList<Die>, String> {
+public class GameDiceConverter implements AttributeConverter<List<Die>, String> {
     @Override
-    public String convertToDatabaseColumn(ArrayList<Die> dice) {
+    public String convertToDatabaseColumn(List<Die> dice) {
         StringBuilder diestring = new StringBuilder();
 
         for (Die die : dice) {
@@ -22,9 +24,9 @@ public class GameDiceConverter implements AttributeConverter<ArrayList<Die>, Str
     }
 
     @Override
-    public ArrayList<Die> convertToEntityAttribute(String s) {
+    public List<Die> convertToEntityAttribute(String s) {
         String[] dice = s.split("(?<=\\G.{2})");
-        ArrayList<Die> result = new ArrayList<>();
+        List<Die> result = new ArrayList<>();
 
         for (String die : dice) {
             switch (die.charAt(0)) {

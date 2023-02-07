@@ -1,9 +1,6 @@
 package dev.nielskuipers.sagrada.model.game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +10,8 @@ public class Player {
     @Id
     private int id;
     private String name;
-    @OneToMany(mappedBy = "player")
-    private List<GamePlayer> playerGames;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GamePlayer> games;
 
     public int getId() {
         return id;

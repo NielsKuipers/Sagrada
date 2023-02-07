@@ -11,14 +11,15 @@ import java.util.List;
 @Entity
 public class Game {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "game")
-    private List<GamePlayer> gamePlayers;
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GamePlayer> players;
     @Convert(converter = GameStateConverter.class)
     private GameState state;
     @Convert(converter = GameDiceConverter.class)
-    private ArrayList<Die> die;
+    private List<Die> die;
 
     public int getId() {
         return this.id;
@@ -32,19 +33,17 @@ public class Game {
         this.state = state;
     }
 
-    public ArrayList<Die> getDie() {
+    public List<Die> getDie() {
         return die;
     }
 
-    public void setDie(ArrayList<Die> die) {
-        this.die = die;
-    }
+    public void setDie(List<Die> die) { this.die = die; }
 
     public List<GamePlayer> getGamePlayers() {
-        return gamePlayers;
+        return players;
     }
 
     public void setGamePlayers(List<GamePlayer> gamePlayers) {
-        this.gamePlayers = gamePlayers;
+        this.players = gamePlayers;
     }
 }
