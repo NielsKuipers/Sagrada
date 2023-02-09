@@ -5,6 +5,7 @@ import dev.nielskuipers.sagrada.exception.GameNotFoundException;
 import dev.nielskuipers.sagrada.exception.PlayerNotFoundException;
 import dev.nielskuipers.sagrada.model.game.Game;
 import dev.nielskuipers.sagrada.model.game.GamePlayer;
+import dev.nielskuipers.sagrada.model.game.GamePlayerId;
 import dev.nielskuipers.sagrada.model.game.Player;
 import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
@@ -53,7 +54,7 @@ public class GamePlayerController {
     @Modifying
     @Transactional
     public ResponseEntity<EntityModel<GamePlayer>> updatePlayer(@RequestParam(required = false) Integer playerScore, @RequestParam(required = false) String boardPattern, @PathVariable int gameId, @PathVariable int playerId) {
-        GamePlayer toUpdate = repository.findByGameIdAndPlayerId(gameId, playerId);
+        GamePlayer toUpdate = repository.findByGameIdAndPlayerId(gameId, playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
 
         if (playerScore != null) toUpdate.setPlayerScore(playerScore);
         if (StringUtils.isNotBlank(boardPattern)) toUpdate.setBoardPattern(boardPattern);
@@ -63,9 +64,17 @@ public class GamePlayerController {
         return ResponseEntity.created(linkTo(methodOn(GamePlayerController.class).getGamePlayer(gameId, playerId)).toUri()).body(assembler.toModel(updatedGamePlayer));
     }
 
+    @DeleteMapping("/{playerId}")
+    @Transactional
+    public ResponseEntity<?> removePlayer(@PathVariable int gameId, @PathVariable int playerId) {
+        repository.deleteByGameIdAndPlayerId(gameId, playerId);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/{playerId}")
     public EntityModel<GamePlayer> getGamePlayer(@PathVariable int gameId, @PathVariable int playerId) {
-        GamePlayer player = repository.findByGameIdAndPlayerId(gameId, playerId);
+        GamePlayer player = repository.findByGameIdAndPlayerId(gameId, playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
 
         return assembler.toModel(player);
     }
