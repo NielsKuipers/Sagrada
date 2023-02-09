@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class GamePlayer {
     @EmbeddedId
-    private GamePlayerId id = new GamePlayerId();
+    private final GamePlayerId id = new GamePlayerId();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("gameId")
@@ -38,7 +38,9 @@ public class GamePlayer {
         this.boardPattern = boardPattern;
     }
 
-    public GamePlayer(){}
+    public GamePlayer() {
+    }
+
     public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;

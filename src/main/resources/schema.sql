@@ -28,6 +28,7 @@ create table IF NOT EXISTS game_player
     player_id     int,
     player_score  int,
     board_pattern varchar(100),
+    constraint pk_game_player primary key (game_id, player_id),
     foreign key (game_id) references game (id) ON DELETE CASCADE,
     foreign key (player_id) references player (id) ON DELETE CASCADE
 );
