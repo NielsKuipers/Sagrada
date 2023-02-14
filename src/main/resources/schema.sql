@@ -21,18 +21,6 @@ create table IF NOT EXISTS player
     name varchar(255)
 );
 
--- Game Players
-create table IF NOT EXISTS game_player
-(
-    game_id       int,
-    player_id     int,
-    player_score  int,
-    board_pattern varchar(100),
-    constraint pk_game_player primary key (game_id, player_id),
-    foreign key (game_id) references game (id) ON DELETE CASCADE,
-    foreign key (player_id) references player (id) ON DELETE CASCADE
-);
-
 -- ObjectiveCard
 create table IF NOT EXISTS objective_card
 (
@@ -41,6 +29,20 @@ create table IF NOT EXISTS objective_card
     description varchar(255) not null,
     type        varchar(25)  not null,
     config      varchar(100) not null
+);
+
+-- Game Players
+create table IF NOT EXISTS game_player
+(
+    game_id        int,
+    player_id      int,
+    player_score   int,
+    board_pattern  varchar(100),
+    objective_card_id int,
+    constraint pk_game_player primary key (game_id, player_id),
+    foreign key (game_id) references game (id) ON DELETE CASCADE,
+    foreign key (player_id) references player (id) ON DELETE CASCADE,
+    foreign key (objective_card_id) references objective_card (id) ON DELETE CASCADE
 );
 
 -- PatterCards

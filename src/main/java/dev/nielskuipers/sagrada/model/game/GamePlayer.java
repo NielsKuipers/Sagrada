@@ -1,6 +1,8 @@
 package dev.nielskuipers.sagrada.model.game;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 public class GamePlayer {
@@ -17,6 +19,10 @@ public class GamePlayer {
 
     private int playerScore;
     private String boardPattern;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "objective_card_id")
+    private ObjectiveCard objectiveCard;
 
     public GamePlayerId getId() {
         return id;
@@ -36,6 +42,14 @@ public class GamePlayer {
 
     public void setBoardPattern(String boardPattern) {
         this.boardPattern = boardPattern;
+    }
+
+    public ObjectiveCard getObjectiveCard() {
+        return objectiveCard;
+    }
+
+    public void setObjectiveCard(ObjectiveCard objectiveCard) {
+        this.objectiveCard = objectiveCard;
     }
 
     public GamePlayer() {

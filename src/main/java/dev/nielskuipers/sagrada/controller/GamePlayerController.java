@@ -2,19 +2,22 @@ package dev.nielskuipers.sagrada.controller;
 
 import dev.nielskuipers.sagrada.assembler.GamePlayerModelAssembler;
 import dev.nielskuipers.sagrada.exception.GameNotFoundException;
+import dev.nielskuipers.sagrada.exception.ObjectiveCardNotFoundException;
 import dev.nielskuipers.sagrada.exception.PlayerNotFoundException;
 import dev.nielskuipers.sagrada.model.game.Game;
 import dev.nielskuipers.sagrada.model.game.GamePlayer;
-import dev.nielskuipers.sagrada.model.game.GamePlayerId;
+import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
 import dev.nielskuipers.sagrada.model.game.Player;
 import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
+import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
 import dev.nielskuipers.sagrada.repository.PlayerRepository;
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +33,14 @@ public class GamePlayerController {
     private final GamePlayerRepository repository;
     private final GameRepository gameRepository;
     private final PlayerRepository playerRepository;
+    private final ObjectiveCardRepository objectiveCardRepository;
     private final GamePlayerModelAssembler assembler;
 
-    GamePlayerController(GamePlayerRepository repository, GameRepository gameRepository, PlayerRepository playerRepository, GamePlayerModelAssembler assembler) {
+    GamePlayerController(GamePlayerRepository repository, GameRepository gameRepository, PlayerRepository playerRepository, ObjectiveCardRepository objectiveCardRepository, GamePlayerModelAssembler assembler) {
         this.repository = repository;
         this.gameRepository = gameRepository;
         this.playerRepository = playerRepository;
+        this.objectiveCardRepository = objectiveCardRepository;
         this.assembler = assembler;
     }
 
@@ -62,6 +67,22 @@ public class GamePlayerController {
         GamePlayer updatedGamePlayer = repository.save(toUpdate);
 
         return ResponseEntity.created(linkTo(methodOn(GamePlayerController.class).getGamePlayer(gameId, playerId)).toUri()).body(assembler.toModel(updatedGamePlayer));
+    }
+
+    @PatchMapping("/{playerId}/objectivecard/{objectiveCardId}")
+    @Modifying
+    @Transactional
+    public ResponseEntity<EntityModel<GamePlayer>> assignObjectiveCard(@PathVariable int gameId, @PathVariable int playerId, @PathVariable int objectiveCardId) {
+        ObjectiveCard objectiveCard = objectiveCardRepository.findById(objectiveCardId).orElseThrow(() -> new ObjectiveCardNotFoundException(objectiveCardId));
+        GamePlayer toUpdate = repository.findByGameIdAndPlayerId(gameId, playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
+
+        toUpdate.setObjectiveCard(objectiveCard);
+        GamePlayer updatedPlayer = repository.save(toUpdate);
+        EntityModel<GamePlayer> entityModel = assembler.toModel(updatedPlayer);
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     @DeleteMapping("/{playerId}")
