@@ -57,4 +57,8 @@ public class ObjectiveCard {
     public void setConfig(String config) {
         this.config = config;
     }
+
+    public int getId() {
+        return id;
+    }
 }
