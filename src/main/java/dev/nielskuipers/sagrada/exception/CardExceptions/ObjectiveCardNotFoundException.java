@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.exception;
+package dev.nielskuipers.sagrada.exception.CardExceptions;
 
 public class ObjectiveCardNotFoundException extends  RuntimeException{
     public ObjectiveCardNotFoundException(int objectiveCardId) {

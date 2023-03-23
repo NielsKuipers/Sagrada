@@ -1,7 +1,7 @@
 package dev.nielskuipers.sagrada.controller;
 
 import dev.nielskuipers.sagrada.assembler.ObjectiveCardModelAssembler;
-import dev.nielskuipers.sagrada.exception.ObjectiveCardNotFoundException;
+import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundException;
 import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
 import org.springframework.hateoas.CollectionModel;
@@ -28,6 +28,7 @@ public class ObjectiveCardController {
       this.repository = repository;
    }
 
+   //get objective card
    @GetMapping("/objectivecard/{cardId}")
    public EntityModel<ObjectiveCard> one(@PathVariable int cardId) {
       ObjectiveCard card = repository.findById(cardId).orElseThrow(() -> new ObjectiveCardNotFoundException(cardId));
@@ -35,6 +36,7 @@ public class ObjectiveCardController {
       return assembler.toModel(card);
    }
 
+   //get all objective cards
    @GetMapping("/objectivecard")
    public CollectionModel<EntityModel<ObjectiveCard>> all() {
       List<EntityModel<ObjectiveCard>> objectiveCards = new ArrayList<>();

@@ -1,10 +1,9 @@
 package dev.nielskuipers.sagrada.model.game;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import net.minidev.json.annotate.JsonIgnore;
-
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class ObjectiveCard {

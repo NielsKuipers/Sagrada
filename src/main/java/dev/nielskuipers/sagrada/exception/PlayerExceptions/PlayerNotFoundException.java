@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.exception;
+package dev.nielskuipers.sagrada.exception.PlayerExceptions;
 
 public class PlayerNotFoundException extends RuntimeException{
     public PlayerNotFoundException(int playerId) {

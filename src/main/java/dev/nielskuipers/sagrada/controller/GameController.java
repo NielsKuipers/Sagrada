@@ -1,10 +1,9 @@
 package dev.nielskuipers.sagrada.controller;
 
 import dev.nielskuipers.sagrada.assembler.GameModelAssembler;
-import dev.nielskuipers.sagrada.exception.GameNotFoundException;
+import dev.nielskuipers.sagrada.exception.GameExceptions.GameNotFoundException;
 import dev.nielskuipers.sagrada.model.game.Game;
 import dev.nielskuipers.sagrada.model.game.GameState;
-import dev.nielskuipers.sagrada.model.game.Player;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

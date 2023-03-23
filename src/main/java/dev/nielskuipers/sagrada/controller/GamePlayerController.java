@@ -1,9 +1,9 @@
 package dev.nielskuipers.sagrada.controller;
 
 import dev.nielskuipers.sagrada.assembler.GamePlayerModelAssembler;
-import dev.nielskuipers.sagrada.exception.GameNotFoundException;
-import dev.nielskuipers.sagrada.exception.ObjectiveCardNotFoundException;
-import dev.nielskuipers.sagrada.exception.PlayerNotFoundException;
+import dev.nielskuipers.sagrada.exception.GameExceptions.GameNotFoundException;
+import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundException;
+import dev.nielskuipers.sagrada.exception.PlayerExceptions.PlayerNotFoundException;
 import dev.nielskuipers.sagrada.model.game.Game;
 import dev.nielskuipers.sagrada.model.game.GamePlayer;
 import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
@@ -12,6 +12,7 @@ import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
 import dev.nielskuipers.sagrada.repository.PlayerRepository;
+import dev.nielskuipers.sagrada.service.GamePlayerService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,15 +36,18 @@ public class GamePlayerController {
     private final PlayerRepository playerRepository;
     private final ObjectiveCardRepository objectiveCardRepository;
     private final GamePlayerModelAssembler assembler;
+    private final GamePlayerService service;
 
-    GamePlayerController(GamePlayerRepository repository, GameRepository gameRepository, PlayerRepository playerRepository, ObjectiveCardRepository objectiveCardRepository, GamePlayerModelAssembler assembler) {
+    GamePlayerController(GamePlayerRepository repository, GameRepository gameRepository, PlayerRepository playerRepository, ObjectiveCardRepository objectiveCardRepository, GamePlayerModelAssembler assembler, GamePlayerService service) {
         this.repository = repository;
         this.gameRepository = gameRepository;
         this.playerRepository = playerRepository;
         this.objectiveCardRepository = objectiveCardRepository;
         this.assembler = assembler;
+        this.service = service;
     }
 
+    //join game
     @PostMapping("/")
     public ResponseEntity<EntityModel<GamePlayer>> addPlayer(@RequestParam int playerId, @PathVariable int gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new GameNotFoundException(gameId));
@@ -55,6 +59,7 @@ public class GamePlayerController {
         return ResponseEntity.created(linkTo(methodOn(GamePlayerController.class).getGamePlayer(gameId, playerId)).toUri()).body(assembler.toModel(newGamePlayer));
     }
 
+    // update player
     @PatchMapping("/{playerId}")
     @Modifying
     @Transactional
@@ -69,6 +74,7 @@ public class GamePlayerController {
         return ResponseEntity.created(linkTo(methodOn(GamePlayerController.class).getGamePlayer(gameId, playerId)).toUri()).body(assembler.toModel(updatedGamePlayer));
     }
 
+    //assign objective card to player
     @PatchMapping("/{playerId}/objectivecard/{objectiveCardId}")
     @Modifying
     @Transactional
@@ -85,21 +91,22 @@ public class GamePlayerController {
                 .body(entityModel);
     }
 
+    //remove player from game
     @DeleteMapping("/{playerId}")
     @Transactional
     public ResponseEntity<?> removePlayer(@PathVariable int gameId, @PathVariable int playerId) {
-        repository.deleteByGameIdAndPlayerId(gameId, playerId);
+        repository.deleteByIdGameIdAndIdPlayerId(gameId, playerId);
 
         return ResponseEntity.noContent().build();
     }
 
+    //get a player from a game
     @GetMapping("/{playerId}")
     public EntityModel<GamePlayer> getGamePlayer(@PathVariable int gameId, @PathVariable int playerId) {
-        GamePlayer player = repository.findByGameIdAndPlayerId(gameId, playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
-
-        return assembler.toModel(player);
+        return service.getGamePlayer(gameId, playerId);
     }
 
+    //get all players from a game
     @GetMapping("/")
     public CollectionModel<EntityModel<GamePlayer>> all(@PathVariable int gameId) {
         List<EntityModel<GamePlayer>> gamePlayers = new ArrayList<>();

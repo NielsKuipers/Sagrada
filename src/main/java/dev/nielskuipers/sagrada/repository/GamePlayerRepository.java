@@ -12,5 +12,5 @@ public interface GamePlayerRepository extends CrudRepository<GamePlayer, GamePla
     public List<GamePlayer> findAllByGameId(int game_id);
     public Optional<GamePlayer> findByGameIdAndPlayerId(int game_id, int player_id);
 
-    public void deleteByGameIdAndPlayerId(int game_id, int player_id);
+    public void deleteByIdGameIdAndIdPlayerId(int game_id, int player_id);
 }

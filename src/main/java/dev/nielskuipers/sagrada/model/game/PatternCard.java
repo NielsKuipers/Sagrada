@@ -1,12 +1,26 @@
 package dev.nielskuipers.sagrada.model.game;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class PatternCard {
     @Id
-    Long id;
-    String pattern;
-    int difficulty;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String pattern;
+    private int difficulty;
+
+    public PatternCard() {
+    }
+
+    public PatternCard(String pattern, int difficulty) {
+        this.pattern = pattern;
+        this.difficulty = difficulty;
+    }
 
     public String getPattern() {
         return pattern;
@@ -14,5 +28,9 @@ public class PatternCard {
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public int getId() {
+        return id;
     }
 }

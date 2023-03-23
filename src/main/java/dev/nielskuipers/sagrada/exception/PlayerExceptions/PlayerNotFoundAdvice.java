@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.exception;
+package dev.nielskuipers.sagrada.exception.PlayerExceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
