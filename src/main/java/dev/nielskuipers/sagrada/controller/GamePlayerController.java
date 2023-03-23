@@ -4,10 +4,7 @@ import dev.nielskuipers.sagrada.assembler.GamePlayerModelAssembler;
 import dev.nielskuipers.sagrada.exception.GameExceptions.GameNotFoundException;
 import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundException;
 import dev.nielskuipers.sagrada.exception.PlayerExceptions.PlayerNotFoundException;
-import dev.nielskuipers.sagrada.model.game.Game;
-import dev.nielskuipers.sagrada.model.game.GamePlayer;
-import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
-import dev.nielskuipers.sagrada.model.game.Player;
+import dev.nielskuipers.sagrada.model.game.*;
 import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
@@ -95,7 +92,7 @@ public class GamePlayerController {
     @DeleteMapping("/{playerId}")
     @Transactional
     public ResponseEntity<?> removePlayer(@PathVariable int gameId, @PathVariable int playerId) {
-        repository.deleteByIdGameIdAndIdPlayerId(gameId, playerId);
+        repository.deleteById(new GamePlayerId(gameId, playerId));
 
         return ResponseEntity.noContent().build();
     }

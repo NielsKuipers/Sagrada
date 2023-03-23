@@ -11,6 +11,13 @@ public class GamePlayerId implements Serializable {
     private int gameId;
     private int playerId;
 
+    public GamePlayerId(int gameId, int playerId){
+        this.gameId = gameId;
+        this.playerId = playerId;
+    }
+
+    public GamePlayerId(){};
+
     public int getGameId() {
         return gameId;
     }

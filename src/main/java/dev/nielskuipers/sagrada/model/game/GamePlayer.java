@@ -20,7 +20,7 @@ public class GamePlayer {
     private int playerScore;
     private String boardPattern;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "objective_card_id")
     private ObjectiveCard objectiveCard;
 
