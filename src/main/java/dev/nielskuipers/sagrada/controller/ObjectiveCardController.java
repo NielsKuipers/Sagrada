@@ -9,14 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/objectivecard")
 public class ObjectiveCardController {
    private final ObjectiveCardService service;
 
@@ -25,19 +19,19 @@ public class ObjectiveCardController {
    }
 
    //get objective card
-   @GetMapping("/objectivecard/{cardId}")
+   @GetMapping("/{cardId}")
    public EntityModel<ObjectiveCard> one(@PathVariable int cardId) {
       return service.one(cardId);
    }
 
    //get all objective cards
-   @GetMapping("/objectivecard")
+   @GetMapping("/")
    public CollectionModel<EntityModel<ObjectiveCard>> all() {
       return service.all();
    }
 
    //get random objective cards based on amount of players
-   @GetMapping("/objectivecard/rand/{amountOfPlayers}")
+   @GetMapping("/rand/{amountOfPlayers}")
    public CollectionModel<EntityModel<ObjectiveCard>> rand(@PathVariable int amountOfPlayers) {
       return service.rand(amountOfPlayers);
    }
