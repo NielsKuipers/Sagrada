@@ -18,5 +18,5 @@ INSERT INTO objective_card (name, description, type, config) VALUES ('Yellow tin
 INSERT INTO objective_card (name, description, type, config) VALUES ('Green tints', 'Sum of values on green die', 'Private', 'G');
 INSERT INTO objective_card (name, description, type, config) VALUES ('Purple tints', 'Sum of values on purple die', 'Private', 'P');
 INSERT INTO objective_card (name, description, type, config) VALUES ('Red tints', 'Sum of values on red die', 'Private', 'R');
-INSERT INTO game_player (game_id, player_id, player_score, board_pattern, objective_card_id) VALUES (1, 1, 250, '', 1);
-INSERT INTO game_player (game_id, player_id, player_score, board_pattern, objective_card_id) VALUES (1, 2, 100, '', 1);
+INSERT INTO game_player (game_id, player_id, player_score, pattern_card_id, tokens, objective_card_id) VALUES (1, 1, 250, 1, 3, 1);
+INSERT INTO game_player (game_id, player_id, player_score, pattern_card_id, tokens, objective_card_id) VALUES (1, 2, 100, 5, 4, 1);

@@ -18,7 +18,11 @@ public class GamePlayer {
     private Player player;
 
     private int playerScore;
-    private String boardPattern;
+    private int tokens;
+
+    @ManyToOne
+    @JoinColumn(name = "pattern_card_id")
+    private PatternCard patternCard;
 
     @ManyToOne
     @JoinColumn(name = "objective_card_id")
@@ -36,12 +40,20 @@ public class GamePlayer {
         this.playerScore = playerScore;
     }
 
-    public String getBoardPattern() {
-        return boardPattern;
+    public int getTokens() {
+        return tokens;
     }
 
-    public void setBoardPattern(String boardPattern) {
-        this.boardPattern = boardPattern;
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
+
+    public PatternCard getPatternCard() {
+        return patternCard;
+    }
+
+    public void setPatternCard(PatternCard patternCard) {
+        this.patternCard = patternCard;
     }
 
     public ObjectiveCard getObjectiveCard() {
