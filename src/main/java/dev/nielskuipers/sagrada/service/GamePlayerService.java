@@ -15,17 +15,11 @@ import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
 import dev.nielskuipers.sagrada.repository.PlayerRepository;
-import io.micrometer.common.util.StringUtils;
-import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;

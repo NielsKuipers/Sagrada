@@ -1,9 +1,7 @@
 package dev.nielskuipers.sagrada.controller;
 
-import dev.nielskuipers.sagrada.assembler.ObjectiveCardModelAssembler;
-import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundException;
 import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
-import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
+import dev.nielskuipers.sagrada.service.ObjectiveCardService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,28 +18,27 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/api/")
 public class ObjectiveCardController {
-   private final ObjectiveCardModelAssembler assembler;
-   private final ObjectiveCardRepository repository;
+   private final ObjectiveCardService service;
 
-   public ObjectiveCardController(ObjectiveCardRepository repository, ObjectiveCardModelAssembler assembler) {
-      this.assembler = assembler;
-      this.repository = repository;
+   public ObjectiveCardController(ObjectiveCardService service) {
+      this.service = service;
    }
 
    //get objective card
    @GetMapping("/objectivecard/{cardId}")
    public EntityModel<ObjectiveCard> one(@PathVariable int cardId) {
-      ObjectiveCard card = repository.findById(cardId).orElseThrow(() -> new ObjectiveCardNotFoundException(cardId));
-
-      return assembler.toModel(card);
+      return service.one(cardId);
    }
 
    //get all objective cards
    @GetMapping("/objectivecard")
    public CollectionModel<EntityModel<ObjectiveCard>> all() {
-      List<EntityModel<ObjectiveCard>> objectiveCards = new ArrayList<>();
-      repository.findAll().forEach(card -> objectiveCards.add(assembler.toModel(card)));
+      return service.all();
+   }
 
-      return CollectionModel.of(objectiveCards, linkTo(methodOn(ObjectiveCardController.class).all()).withSelfRel());
+   //get random objective cards based on amount of players
+   @GetMapping("/objectivecard/rand/{amountOfPlayers}")
+   public CollectionModel<EntityModel<ObjectiveCard>> rand(@PathVariable int amountOfPlayers) {
+      return service.rand(amountOfPlayers);
    }
 }
