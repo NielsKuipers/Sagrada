@@ -44,7 +44,7 @@ public class GamePlayerService {
     }
 
     //get a player from a game
-    public EntityModel<GamePlayer> getGamePlayer(int gameId, int playerId) {
+    public EntityModel<GamePlayer> one(int gameId, int playerId) {
         GamePlayer player = repository.findByGameIdAndPlayerId(gameId, playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
 
         return assembler.toModel(player);

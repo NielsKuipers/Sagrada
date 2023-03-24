@@ -41,7 +41,7 @@ public class PatternCardService {
         return CollectionModel.of(patternCards, linkTo(methodOn(PatternCardController.class).all()).withSelfRel());
     }
 
-    //get random pattern card
+    //get 2 random pattern cards per player
     public CollectionModel<EntityModel<PatternCard>> rand(int amountOfPlayers) {
         Random rand = new Random();
 

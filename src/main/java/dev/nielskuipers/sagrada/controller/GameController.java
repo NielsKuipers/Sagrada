@@ -1,10 +1,8 @@
 package dev.nielskuipers.sagrada.controller;
 
-import dev.nielskuipers.sagrada.assembler.GameModelAssembler;
-import dev.nielskuipers.sagrada.exception.GameExceptions.GameNotFoundException;
 import dev.nielskuipers.sagrada.model.game.Game;
 import dev.nielskuipers.sagrada.model.game.GameState;
-import dev.nielskuipers.sagrada.repository.GameRepository;
+import dev.nielskuipers.sagrada.service.GameService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -19,37 +17,27 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/api/game")
 public class GameController {
-    private final GameRepository repository;
-    private final GameModelAssembler assembler;
+    private final GameService service;
 
-    GameController(GameRepository repository, GameModelAssembler assembler) {
-        this.repository = repository;
-        this.assembler = assembler;
+    GameController(GameService service) {
+        this.service = service;
     }
 
+    //get a game
     @GetMapping("/{id}")
-    public EntityModel<Game> getGame(@PathVariable int id) {
-        Game game = repository.findById(id)
-                .orElseThrow(() -> new GameNotFoundException(id));
-
-        return assembler.toModel(game);
+    public EntityModel<Game> one(@PathVariable int id) {
+        return service.one(id);
     }
 
+    //get all games
     @GetMapping("/")
     public CollectionModel<EntityModel<Game>> all() {
-        List<EntityModel<Game>> games = new ArrayList<>();
-        repository.findAll().forEach(game -> games.add(assembler.toModel(game)));
-
-        return CollectionModel.of(games, linkTo(methodOn(GameController.class).all()).withSelfRel());
+        return service.all();
     }
 
+    //create a new game
     @PostMapping("/")
-    ResponseEntity<EntityModel<Game>> newGame(@RequestBody Game game) {
-        game.setState(GameState.NEW);
-        Game newGame = repository.save(game);
-
-        return ResponseEntity
-                .created(linkTo(methodOn(GameController.class).getGame(newGame.getId())).toUri())
-                .body(assembler.toModel(newGame));
+    ResponseEntity<EntityModel<Game>> newGame() {
+        return service.create();
     }
 }

@@ -32,6 +32,7 @@ public class PatternCardController {
         return service.all();
     }
 
+    //get 2 random pattern cards per player
     @GetMapping("/rand/{amountOfPlayers}")
     public CollectionModel<EntityModel<PatternCard>> rand(@PathVariable int amountOfPlayers) {
         return service.rand(amountOfPlayers);

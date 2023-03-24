@@ -51,7 +51,7 @@ public class GamePlayerController {
     //get a player from a game
     @GetMapping("/{playerId}")
     public EntityModel<GamePlayer> getGamePlayer(@PathVariable int gameId, @PathVariable int playerId) {
-        return service.getGamePlayer(gameId, playerId);
+        return service.one(gameId, playerId);
     }
 
     //get all players from a game

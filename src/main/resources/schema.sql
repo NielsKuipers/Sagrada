@@ -11,7 +11,7 @@ create table IF NOT EXISTS game
 (
     id    int auto_increment primary key,
     die   varchar(50),
-    state varchar(10)
+    state varchar(10) DEFAULT 'NEW'
 );
 
 -- Player
