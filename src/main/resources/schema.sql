@@ -36,7 +36,37 @@ create table IF NOT EXISTS objective_card
     name        varchar(100) not null,
     description varchar(255) not null,
     type        varchar(25)  not null,
+    points      int default 1,
     config      varchar(100) not null
+);
+
+-- Game objective cards
+create table IF NOT EXISTS game_objective_card
+(
+    game_id           int,
+    objective_card_id int,
+    constraint pk_game_objective_card primary key (game_id, objective_card_id),
+    foreign key (game_id) references game (id) ON DELETE CASCADE,
+    foreign key (objective_card_id) references objective_card (id) ON DELETE CASCADE
+);
+
+-- Toolcard
+create table IF NOT EXISTS toolcard
+(
+    id          int auto_increment primary key,
+    name        varchar(100) not null unique,
+    description varchar(255) not null,
+    cost        int
+);
+
+-- Game Toolcards
+create table IF NOT EXISTS game_tool_card
+(
+    game_id     int,
+    toolcard_id int,
+    constraint pk_game_tool_card primary key (game_id, toolcard_id),
+    foreign key (game_id) references game (id) ON DELETE CASCADE,
+    foreign key (toolcard_id) references toolcard (id) ON DELETE CASCADE
 );
 
 -- Game Players
