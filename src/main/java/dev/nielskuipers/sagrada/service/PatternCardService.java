@@ -3,7 +3,7 @@ package dev.nielskuipers.sagrada.service;
 import dev.nielskuipers.sagrada.assembler.PatternCardModelAssembler;
 import dev.nielskuipers.sagrada.controller.PatternCardController;
 import dev.nielskuipers.sagrada.exception.CardExceptions.PatternCardNotFoundException;
-import dev.nielskuipers.sagrada.model.game.PatternCard;
+import dev.nielskuipers.sagrada.model.game.cards.PatternCard;
 import dev.nielskuipers.sagrada.repository.PatternCardRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

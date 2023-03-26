@@ -11,6 +11,7 @@ import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundEx
 import dev.nielskuipers.sagrada.exception.GameExceptions.GameNotFoundException;
 import dev.nielskuipers.sagrada.exception.PlayerExceptions.PlayerNotFoundException;
 import dev.nielskuipers.sagrada.model.game.*;
+import dev.nielskuipers.sagrada.model.game.cards.ObjectiveCard;
 import dev.nielskuipers.sagrada.repository.GamePlayerRepository;
 import dev.nielskuipers.sagrada.repository.GameRepository;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;

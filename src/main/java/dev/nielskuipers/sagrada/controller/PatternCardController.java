@@ -1,6 +1,6 @@
 package dev.nielskuipers.sagrada.controller;
 
-import dev.nielskuipers.sagrada.model.game.PatternCard;
+import dev.nielskuipers.sagrada.model.game.cards.PatternCard;
 import dev.nielskuipers.sagrada.service.PatternCardService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

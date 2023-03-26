@@ -2,8 +2,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 drop table IF EXISTS game_player;
 drop table IF EXISTS game;
 drop table IF EXISTS player;
+drop table IF EXISTS game_objective_card;
 drop table IF EXISTS objective_card;
 drop table IF EXISTS pattern_card;
+drop table IF EXISTS game_tool_card;
+drop table IF EXISTS toolcard;
 SET foreign_key_checks = 1;
 
 -- Game
@@ -56,7 +59,7 @@ create table IF NOT EXISTS toolcard
     id          int auto_increment primary key,
     name        varchar(100) not null unique,
     description varchar(255) not null,
-    cost        int
+    card_type   varchar(100)
 );
 
 -- Game Toolcards
@@ -64,6 +67,7 @@ create table IF NOT EXISTS game_tool_card
 (
     game_id     int,
     toolcard_id int,
+    used        bool,
     constraint pk_game_tool_card primary key (game_id, toolcard_id),
     foreign key (game_id) references game (id) ON DELETE CASCADE,
     foreign key (toolcard_id) references toolcard (id) ON DELETE CASCADE

@@ -1,4 +1,4 @@
-package dev.nielskuipers.sagrada.model.game;
+package dev.nielskuipers.sagrada.model.game.cards;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

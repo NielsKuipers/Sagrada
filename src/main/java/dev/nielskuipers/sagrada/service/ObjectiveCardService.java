@@ -3,7 +3,7 @@ package dev.nielskuipers.sagrada.service;
 import dev.nielskuipers.sagrada.assembler.ObjectiveCardModelAssembler;
 import dev.nielskuipers.sagrada.controller.ObjectiveCardController;
 import dev.nielskuipers.sagrada.exception.CardExceptions.ObjectiveCardNotFoundException;
-import dev.nielskuipers.sagrada.model.game.ObjectiveCard;
+import dev.nielskuipers.sagrada.model.game.cards.ObjectiveCard;
 import dev.nielskuipers.sagrada.repository.ObjectiveCardRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

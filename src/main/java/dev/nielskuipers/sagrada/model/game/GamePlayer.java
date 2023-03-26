@@ -1,8 +1,8 @@
 package dev.nielskuipers.sagrada.model.game;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import dev.nielskuipers.sagrada.model.game.cards.ObjectiveCard;
+import dev.nielskuipers.sagrada.model.game.cards.PatternCard;
 import jakarta.persistence.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 public class GamePlayer {
