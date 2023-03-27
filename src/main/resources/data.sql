@@ -51,6 +51,7 @@ VALUES ('Color variety per column', 'Amount of columns without repeating colors'
 INSERT INTO objective_card (name, description, type, points, config)
 VALUES ('Color variety per row', 'Amount of rows without repeating colors', 'Public', 5, 'a,0,-,n');
 
+
 -- tool cards
 
 -- game players
@@ -58,3 +59,11 @@ INSERT INTO game_player (game_id, player_id, player_score, pattern_card_id, toke
 VALUES (1, 1, 250, 1, 3, 1);
 INSERT INTO game_player (game_id, player_id, player_score, pattern_card_id, tokens, objective_card_id)
 VALUES (1, 2, 100, 5, 4, 2);
+
+-- game objective cards
+INSERT INTO game_objective_card (game_id, objective_card_id)
+VALUES (1, 6);
+INSERT INTO game_objective_card (game_id, objective_card_id)
+VALUES (1, 7);
+INSERT INTO game_objective_card (game_id, objective_card_id)
+VALUES (1, 8);
