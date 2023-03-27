@@ -7,8 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/dice")
 public class DiceController {
-    @GetMapping("/getDice")
-    public String hello() {
-        return "hehe";
-    }
 }

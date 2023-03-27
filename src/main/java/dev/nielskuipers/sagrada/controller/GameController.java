@@ -1,18 +1,16 @@
 package dev.nielskuipers.sagrada.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import dev.nielskuipers.sagrada.model.game.Game;
-import dev.nielskuipers.sagrada.model.game.GameState;
 import dev.nielskuipers.sagrada.service.GameService;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/game")
@@ -39,5 +37,13 @@ public class GameController {
     @PostMapping("/")
     ResponseEntity<EntityModel<Game>> newGame() {
         return service.create();
+    }
+
+    //update a game
+    @PatchMapping("/{gameId}")
+    @Modifying
+    @Transactional
+    public ResponseEntity<EntityModel<Game>> updateGame(@PathVariable int gameId, @RequestBody JsonPatch patch) {
+        return service.updateGame(gameId, patch);
     }
 }
